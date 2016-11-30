@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% block search %}
+<p>Выберите тип поиска:</p><br>
+<form class="pure-form" method="post" action="/result/">
+    {% csrf_token %}
+    <label for="option-one" class="pure-radio">
+        <input id="option-one" type="radio" name="optionsRadios" value="option1">
+        Выборка твитов по ключевым словам:<br><br>
+        {% for field in query_form %}
+            <label>{{ field.label }}</label><br>
+            {{ field }}<br><br>
+        {% endfor %}
+    </label>
+<br><br>
+    <label for="option-two" class="pure-radio">
+        <input id="option-two" type="radio" name="optionsRadios" value="option2">
+        Выборка твитов пользователя:<br><br>
+        {% for field in user_form %}
+            <label>{{ field.label }}</label><br>
+            {{ field }}<br><br>
+        {% endfor %}
+    </label>
+    <br><br>
+    <button type="submit" class="pure-button pure-button-disabled">Продолжить</button><br><br>
+    <progress id="p" class="pure-input-1-3" hidden></progress>
+</form>
+
+{% if errors %}
+    <ul>
+        {% for error in errors %}
+            <li style="color: red;">{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}
